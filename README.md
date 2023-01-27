@@ -51,10 +51,15 @@ It's **not** just an RSS aggregator nor a feed reader, it's a `feed aggregator` 
    - It should not be running in the background.
    - It should not access the network by it self. It can only request the `Feed Agregator` for some extra media for a specific news or feed. The `Feed Aggregator` will take care of creating a secure and private request to obtain the extra media.
 4. A notification/status interface might be implemented as part of the `Feed Reader` or as a completly separate project.
-   - It might be an icon in the system tray or a desktop wedget or a script that output some text to be displayed somewhare.
+   - It might be an icon in the system tray or a desktop widget or a script that output some text to be displayed somewhare.
    - It should wait for a signal from the `Feed Aggregator` to update it's information.
    - It ment to help saving time and resources by giving the user the summary so he don't need to open the whole `Feed Reader`.
-5. ...
+5. Timers in the feed aggregator don't work by the user setting a time to fetch the data. The user will categorize every feed by it's importance and rate of posting news and any other influential factor to calculate a `number of interest/priority` that will determine how often data should be fetched from the source.
+    - The feed aggregator will run a timer for every `number of priority` range, every feed falls in this range should be fetched ones in a random time before the timer ends and resets.
+    - User should be able to specify ranges for the `number of priority`, and there maximum times that will be use in there timers. (This is a global setting, not for every feed)
+    - This system will be used in every fetch related thing. If the user want to fetch all the feeds now, a very short maximum time will be used for every range tell they are reseted. And if the user want to fetch a single feed now, it will be poped from the timer's list.
+    - If an error accured in the fetching process, it will not be poped from the timer's list so we can try again in a random time, but an error flag will be assigned to it, so the timer could be reseted without it beegin poped from it's list.
+6. ...
 
 ## Installation
 
@@ -86,16 +91,16 @@ git checkout vx.x.x
 
 4. Use `cargo` to install it
 
-```shell
+```
 cargo install --path=.
 ```
 
 ## Q&A
 
-Q: Why?
+**Q:** Why?
 
 - To improve the overall RSS clients experience and news aggregators in general on the Linux Desktop, since the existing clients usually use a lot of resources, don't support every feature a feed aggregator should have, and a lot of other disadvantages. Having a bad news aggregator might reduce our producivity and expose us to some privacy and security risks, which is contrary to the purpose of a news aggregator in the first place.
 
-Q: What does `Mujammi'` mean?
+**Q:** What does `Mujammi'` mean?
 
 - It is an Arabic word `مُجَمِّع` that could be translated to `aggregator` in english.
